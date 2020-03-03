@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import sun.text.Normalizer;
 
-
 public class Main {
 
 	public static void main(String[] args) {
@@ -73,18 +72,27 @@ public class Main {
 			} while (Vérification == 0);
 
 		//Choix du nombre de tour
+		String N;
 		int X = 0;
 		do {
-			System.out.println("Combien de mots voulez vous traduire ?");
-			X = sc.nextInt();
+			do {
+				Vérification = 1;
+				System.out.println("Combien de mots voulez vous traduire ?");
+				N = sc.nextLine();
+				try {
+					Integer.parseInt(N);
+					} catch (NumberFormatException e){
+							System.out.println("Vous devez entrez un nombre entier.");
+							Vérification = 0;
+							}
+
+			} while(Vérification == 0);
+			X = Integer.valueOf(N);
 			if (X > 28){
 				System.out.println("Vous ne pouvez pas traduire plus de 28 mots.");
 				Vérification = 0;
 			}
-			else {
-				Vérification = 1;
-			}
-		} while(Vérification == 0);
+		} while(Vérification ==0);
 
 		//Jeu
 		String mem = "."; //Initialisation mémoire vide
@@ -103,9 +111,7 @@ public class Main {
 			//Réponse
 			String Proposition;
 			String Normalizer = sansAccents(mot2);
-			if (i == 0){
-				Proposition = sc.nextLine();
-			}
+
 			Proposition = sc.nextLine();
 			if (Proposition.equals(mot2) || Proposition.equals(Normalizer) || Proposition.equals(mot2.toLowerCase()) || Proposition.equals(Normalizer.toLowerCase())){ //Tolérance de bonne réponse
 				System.out.println("Bravo ! Vous gagnez un point !"); //Message en cas de bonne réponse
