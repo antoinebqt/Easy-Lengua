@@ -1,13 +1,10 @@
 package packageISN;
 
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class Main {
 
 	public static void main(String[] args) {
-
-		//Scanner
-		Scanner sc = new Scanner(System.in);
 
 		//Compteur de bonne réponse
 		int P = 0;
@@ -16,11 +13,11 @@ public class Main {
 		int Vérification = 0;
 
 		//Choix de la langue de départ
+		String[] langue = {"Choisir une langue","Français","Anglais","Espagnol"}; //Langue possible
 		int langue1 = -1;
 		String langueD;
 		do {
-				System.out.println("Langue de départ ? (Français, Anglais ou Espagnol)"); //Langues possibles
-				langueD = sc.nextLine();
+				langueD = (String)JOptionPane.showInputDialog(null, "Langue de départ ?", "Easy Lengua", JOptionPane.QUESTION_MESSAGE, null, langue, langue[0]); //Message demandant la langue de départ à l'utilisateur
 				if (langueD.toUpperCase().equals("FRANCAIS") || langueD.toUpperCase().equals("FRANÇAIS")){ //Tolérance d'orthographe
 					langue1 = 0;
 					Vérification = 1;
@@ -34,7 +31,7 @@ public class Main {
 					Vérification = 1;
 				}
 				else {
-					System.out.println("La langue saisie est invalide, veuillez recommencer."); //Message d'erreur si la langue choisie n'est pas le français, l'anglais ou l'espagnol
+					JOptionPane.showMessageDialog(null, "La langue saisie est invalide, veuillez recommencer", "Easy Lengua - Erreur", JOptionPane.ERROR_MESSAGE); //Message d'erreur si la langue choisie n'est pas le français, l'anglais ou l'espagnol
 					Vérification = 0;
 				}
 			} while(Vérification == 0);
@@ -43,8 +40,7 @@ public class Main {
 		int langue2 = -1;
 		String langueF;
 		do {
-				System.out.println("Langue de traduction ? (Français, Anglais ou Espagnol)"); //Langues possibles
-				langueF = sc.nextLine();
+			langueF = (String)JOptionPane.showInputDialog(null, "Langue de traduction ?", "Easy Lengua", JOptionPane.QUESTION_MESSAGE, null, langue, langue[0]); //Message demandant la langue de traduction à l'utilisateur
 
 				if (langueF.toUpperCase().equals("FRANCAIS") || langueF.toUpperCase().equals("FRANÇAIS")){ //Tolérance d'orthographe
 					langue2 = 0;
@@ -59,11 +55,11 @@ public class Main {
 					Vérification = 1;
 				}
 				else {
-					System.out.println("La langue saisie est invalide, veuillez recommencer."); //Message d'erreur si la langue choisie n'est pas le français, l'anglais ou l'espagnol
+					JOptionPane.showMessageDialog(null, "La langue saisie est invalide, veuillez recommencer", "Easy Lengua - Erreur", JOptionPane.ERROR_MESSAGE); //Message d'erreur si la langue choisie n'est pas le français, l'anglais ou l'espagnol
 					Vérification = 0;
 				}
 				if (langue2 == langue1){
-					System.out.println("La langue saisie ne peut pas être utilisé, veuillez recommencer"); //Message d'erreur si la langue de traduction choisie est identique à la langue de départ
+					JOptionPane.showMessageDialog(null, "La langue saisie ne peut pas être utilisée, veuillez recommencer", "Easy Lengua - Erreur", JOptionPane.ERROR_MESSAGE); //Message d'erreur si la langue de traduction choisie est identique à la langue de départ
 					Vérification = 0;
 				}
 			} while (Vérification == 0);
@@ -74,30 +70,28 @@ public class Main {
 		do {
 			do {
 				Vérification = 1;
-				System.out.println("Combien de mots voulez vous traduire ?");
-				N = sc.nextLine();
+				N = JOptionPane.showInputDialog(null, "Combien de mots voulez traduire ?", "Easy Lengua", JOptionPane.QUESTION_MESSAGE);
 				try {
 					Integer.parseInt(N);
 					} catch (NumberFormatException e){
-							System.out.println("Vous devez entrez un nombre entier.");
+						JOptionPane.showMessageDialog(null, "Vous devez entrez un nombre entier", "Easy Lengua - Erreur", JOptionPane.ERROR_MESSAGE);
 							Vérification = 0;
 							}
 
 			} while(Vérification == 0);
 			X = Integer.valueOf(N);
 			if (X > 30){
-				System.out.println("Vous ne pouvez pas traduire plus de 30 mots.");
+				JOptionPane.showMessageDialog(null, "Vous ne pouvez pas traduire plus de 30 mots.", "Easy Lengua - Erreur", JOptionPane.WARNING_MESSAGE);
 				Vérification = 0;
 			}
 		} while(Vérification ==0);
 
 		//Choix du thème
-		String choixTheme;
+		String[] ListeThemes = {"Choisir un thème","HighTech","Sport","Nourriture","Maison","Aucun"}; //Thème possible
 		int Theme = 1;
 		int Y = 1;
 		do {
-			System.out.println("Voulez vous choisir un thème ? (HighTech, Sport, Nourriture, Maison, Aucun)");
-			choixTheme = sc.nextLine();
+			String choixTheme = (String)JOptionPane.showInputDialog(null, "Voulez vous choisir un thème ?", "Easy Lengua", JOptionPane.QUESTION_MESSAGE, null, ListeThemes, ListeThemes[0]);
 			if (choixTheme.toUpperCase().equals("HIGHTECH")){
 				Theme = 0;
 				Y = 29;
@@ -123,7 +117,7 @@ public class Main {
 				Vérification = 1;
 			}
 			else {
-				System.out.println("Le théme séléctionné est invalide, veuillez recommencer.");
+				JOptionPane.showMessageDialog(null, "Le thème sélectionné est invalide, veuillez recommencer", "Easy Lengua - Erreur", JOptionPane.ERROR_MESSAGE);
 				   Vérification = 0;
 			}
 		} while (Vérification == 0);
@@ -147,19 +141,19 @@ public class Main {
 			String Proposition;
 			String mot2SA = sansAccents(mot2).toUpperCase(); //Mot à retrouver sans accents s'il y en a
 
-			Proposition = sc.nextLine().toUpperCase();
-			if (Proposition.equals(mot2) || Proposition.equals(mot2SA)){ //Tolérance de bonne réponse
-				System.out.println("Bravo ! Vous gagnez un point !"); //Message en cas de bonne réponse
+			Proposition = JOptionPane.showInputDialog(null, "Le mot à traduire en " + langueF.toLowerCase() + " : " + mot1, "Easy Lengua", JOptionPane.QUESTION_MESSAGE);
+			if (Proposition.toUpperCase().equals(mot2) || Proposition.toUpperCase().equals(mot2SA)){ //Tolérance de bonne réponse
+				JOptionPane.showMessageDialog(null, "Bravo, vous gagnez un point !", "Easy Lengua", JOptionPane.INFORMATION_MESSAGE); //Message en cas de bonne réponse
 				P++; // Ajout d'un point
 			}
 			else {
-			System.out.println("Dommage ! La bonne réponse était : " + mot2); //Message en cas de mauvaise réponse
+				JOptionPane.showMessageDialog(null, "Dommage ! La bonne réponse était : " + mot2, "Easy Lengua", JOptionPane.INFORMATION_MESSAGE); //Message en cas de mauvaise réponse
 			}
 		}
 
 		//Affichage du résultat final et de la moyenne de bonne réponse
 		int H = (P*100/X);
-		System.out.println("C'est fini ! Votre résultat final : " + P + "/" + X + " soit " + H + "% de bonnes réponses !");
+		JOptionPane.showMessageDialog(null, "C'est fini ! Votre résultat final : " + P + "/" + X + " soit " + H + "% de bonnes réponses !", "Easy Lengua", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 
